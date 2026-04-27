@@ -83,15 +83,15 @@ function gameLoop() {
     {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b1313'},
   );
 
-   if (Math.random() < 0.01) obstacles.push(
-    {x: canvas.width, y: 220, width: 30, height: 200, color: '#138b85'},
+   if (Math.random() < 0.0025) obstacles.push(
+    {x: canvas.width, y: 220, width: 30, height: 180, color: '#138b85'},
   );
 
-   if (Math.random() < 0.01) obstacles.push(
+   if (Math.random() < 0.005) obstacles.push(
     {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b8913'},
   );
 
-   if (Math.random() < 0.01) obstacles.push(
+   if (Math.random() < 0.0075) obstacles.push(
     {x: canvas.width, y: 320, width: 30, height: 80, color: '#25138b'}
   );
 
