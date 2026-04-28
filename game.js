@@ -17,11 +17,29 @@ function createObstacle() {
   });
 }
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' && !player.isJumping && gameRunning) {
     player.velocityY = -15;
     player.isJumping = true;
   }
+
+if (e.code === 'KeyC') {
+  executaComandoAleatorio();
+}
+
+if (e.code === 'KeyI') {
+  INeedMorePower();
+}
+
+if (e.code === 'KeyP') {
+    gameRunning = !gameRunning;
+}
+
+if (e.code === 'KeyA' && gameRunning) {
+  addobstacle();
+}
 
 if (e.code === 'KeyR' && gameRunning) {
   resetGame();
@@ -34,11 +52,55 @@ if (e.code == 'KeyR' && !gameRunning) {
 if (e.code == 'KeyT') {
   addPoints();
 }
-});
+
+if (e.code == 'KeyD') {
+  dash();
+}});
+
+// Comandos (funções simples)
+function color1() {
+  player.color = '#FF4500';
+}
+
+function color2() {
+  player.color = '#00FF00';
+}
+
+function color3() {
+  player.color = '#00FFFF';
+}
+
+// Função que executa um aleatório
+function executaComandoAleatorio() {
+  const comandos = [color1, color2, color3];  // Array de funções
+  const aleatorio = comandos[Math.floor(Math.random() * comandos.length)];
+  aleatorio();  // Executa a escolhida
+}
 
 function addPoints() {
   score += 1000;
 }
+
+function INeedMorePower() {
+  score += 10000;
+  gameSpeed *= 3;
+  player.velocityY = -20;
+  player.color = '#53157c';
+  setTimeout(() => {
+    player.color = '#FF4500';
+    gameSpeed /= 3;
+  }, 500);
+}
+
+function dash() {
+  if (gameRunning == true && gameRunning) {
+    gameSpeed = gameSpeed * 2;
+    player.isdashing = true;
+    setTimeout(() => {
+      gameSpeed = gameSpeed / 2;
+      player.isdashing = false;
+    }, 500);
+}}
 
 function resetGame() {
   player.y = 300;
@@ -46,18 +108,16 @@ function resetGame() {
   player.isJumping = false;
   obstacles.length = 0;
   
-  // ← ADICIONE:
-  //obstacles.push(
-  //  {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b1313'},
-  //  {x: canvas.width, y: 220, width: 30, height: 200, color: '#138b85'},
-  //  {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b8913'},
-  //  {x: canvas.width, y: 320, width: 30, height: 80, color: '#25138b'}
-  //);
   
   score = 0;
   gameSpeed = 10;
   gameRunning = true;
 }
+
+function addobstacle() {
+  if (gameRunning) {
+    MAX_OBSTACLES += 1;
+  }}
 
 // Loop principal do jogo (60 FPS)
 function gameLoop() {
@@ -73,27 +133,30 @@ function gameLoop() {
       player.isJumping = false;
     }
 
-    // Atualiza obstáculos
-    obstacles.forEach((obs, index) => {
-      obs.x -= gameSpeed;
-      if (obs.x + obs.width < 0) obstacles.splice(index, 1);
-    });
+// Limpeza segura (loop reverso)
+for (let index = obstacles.length - 1; index >= 0; index--) {
+  obstacles[index].x -= gameSpeed;
+  if (obstacles[index].x + obstacles[index].width < 0) {
+    obstacles.splice(index, 1);
+  }
+}
 
-    if (Math.random() < 0.01) obstacles.push(
-    {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b1313'},
-  );
-
-   if (Math.random() < 0.0025) obstacles.push(
-    {x: canvas.width, y: 220, width: 30, height: 180, color: '#138b85'},
-  );
-
-   if (Math.random() < 0.005) obstacles.push(
-    {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b8913'},
-  );
-
-   if (Math.random() < 0.0075) obstacles.push(
-    {x: canvas.width, y: 320, width: 30, height: 80, color: '#25138b'}
-  );
+// Spawn com limite (ex: max 20 obstáculos)
+const MAX_OBSTACLES = 3;
+if (obstacles.length < MAX_OBSTACLES) {
+  if (Math.random() < 0.01) {
+    obstacles.push({x: canvas.width, y: 260, width: 30, height: 100, color: '#8b1313'});
+  }
+  if (Math.random() < 0.0025) {
+    obstacles.push({x: canvas.width, y: 220, width: 30, height: 180, color: '#138b85'});
+  }
+  if (Math.random() < 0.005) {
+    obstacles.push({x: canvas.width, y: 300, width: 30, height: 60, color: '#8b8913'});
+  }
+  if (Math.random() < 0.0075) {
+    obstacles.push({x: canvas.width, y: 320, width: 30, height: 80, color: '#25138b'});
+  }
+}
 
 //      obstacles.push(
 //    {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b1313'},
