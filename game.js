@@ -19,12 +19,6 @@ function createObstacle() {
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-document.addEventListener('touchstart', () => {
-  if (!player.isJumping) {
-    resetGame();
-  }
-});
-
 document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyW' && !player.isJumping && gameRunning) {
     player.velocityY = -15;
