@@ -35,7 +35,7 @@ function atualizar() {
 
   if (gp) {
     // botão A (padrão Xbox)
-    if (gp.buttons[97].pressed && !player.isJumping && gameRunning) {
+    if (gp.buttons[a].pressed && !player.isJumping && gameRunning) {
       player.velocityY = -15;
       player.isJumping = true;
     }
