@@ -27,25 +27,6 @@ function createObstacle() {
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-//gaypad
-
-function atualizar() {
-  const gamepads = navigator.getGamepads();
-  const gp = gamepads[0]; // primeiro controle
-
-  if (gp) {
-    // botão A (padrão Xbox)
-    if (gp.buttons[0].pressed && !player.isJumping && gameRunning) {
-      player.velocityY = -15;
-      player.isJumping = true;
-    }
-  }
-
-  requestAnimationFrame(atualizar);
-}
-
-atualizar();
-
 document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyW' && !player.isJumping && gameRunning) {
     player.velocityY = -15;
@@ -149,6 +130,21 @@ function addobstacle() {
 // Loop principal do jogo (60 FPS)
 function gameLoop() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  //gaypad
+
+  const gamepads = navigator.getGamepads();
+  const gp = gamepads[0]; // primeiro controle
+
+  if (gp) {
+    // botão A (padrão Xbox)
+    if (gp.buttons[0].pressed && !player.isJumping && gameRunning) {
+      player.velocityY = -15;
+      player.isJumping = true;
+    }
+  }
+
+  requestAnimationFrame(gameLoop);
 
   if (gameRunning) {
     // Atualiza jogador (gravidade e pulo)
