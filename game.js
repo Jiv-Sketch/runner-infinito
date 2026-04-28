@@ -1,6 +1,14 @@
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+const musica = new Audio('assets/i-am-the-storm.mp3');
+
+musica.loop = true;   // fica repetindo
+musica.volume = 1; // volume (0 a 1)
+
+// tocar
+musica.play();
+
 const player = {
   x: 50, y: 30, width: 40, height: 50, color: '#FF4500',
   velocityY: 0, isJumping: false
