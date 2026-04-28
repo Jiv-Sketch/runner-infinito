@@ -20,9 +20,8 @@ function createObstacle() {
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 document.addEventListener('touchstart', () => {
-  if (!player.isJumping && gameRunning) {
-    player.velocityY = -15;
-    player.isJumping = true;
+  if (!player.isJumping) {
+    resetGame();
   }
 });
 
