@@ -25,6 +25,11 @@ document.addEventListener('keydown', (e) => {
     player.isJumping = true;
   }
 
+if (e.code === 'touchStart' && !player.isJumping && gameRunning) {
+  player.velocityY = -15;
+  player.isJumping = true;
+}
+
 if (e.code === 'KeyC') {
   executaComandoAleatorio();
 }
