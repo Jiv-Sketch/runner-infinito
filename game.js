@@ -8,11 +8,11 @@ const player = {
 };
 
 const playerImg = new Image();
-playerImg.src = 'assets/Kasaneandando.png';  // Sem / inicial pro local
+playerImg.src = './assets/Kasaneandando.png';  // Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
 
 const jumpImg = new Image();
-jumpImg.src = 'assets/Kasane.png';  // Baixe/renomeie uma pose pulando
+jumpImg.src = './assets/Kasane.png';  // Baixe/renomeie uma pose pulando
 jumpImg.onload = () => console.log('Jump carregada!');
 
 const obstacles = [];
