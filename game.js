@@ -16,7 +16,7 @@ jumpImg.src = './assets/Kasane.png';  // Baixe/renomeie uma pose pulando
 jumpImg.onload = () => console.log('Jump carregada!');
 
 const dashImg = new Image();
-dashImg.src = 'assets/KasaneDash.png';  // Baixe/renomeie uma pose dashing
+dashImg.src = './assets/KasaneDash.png';  // Baixe/renomeie uma pose dashing
 dashImg.onload = () => console.log('Dash carregada!');
 
 const obstacles = [];
