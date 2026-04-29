@@ -8,7 +8,7 @@ const player = {
 };
 
 const playerImg = new Image();
-playerImg.src = './Kasaneandando.png';// Sem / inicial pro local
+playerImg.src = 'Kasaneandando.png';// Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
 
 const jumpImg = new Image();
@@ -16,7 +16,7 @@ jumpImg.src = './assets/Kasane.png';  // Baixe/renomeie uma pose pulando
 jumpImg.onload = () => console.log('Jump carregada!');
 
 const dashImg = new Image();
-dashImg.src = './assets/KasaneDash.png';  // Baixe/renomeie uma pose dashing
+dashImg.src = 'assets/KasaneDash.png';  // Baixe/renomeie uma pose dashing
 dashImg.onload = () => console.log('Dash carregada!');
 
 const obstacles = [];
