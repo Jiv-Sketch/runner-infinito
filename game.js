@@ -8,7 +8,7 @@ const player = {
 };
 
 const playerImg = new Image();
-playerImg.src = './assets/Kasaneandando.png';  // Sem / inicial pro local
+playerImg.src = 'https://Jiv-Sketch.github.io/repo/assets/Kasaneandando.png';  // Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
 
 const jumpImg = new Image();
