@@ -10,6 +10,7 @@ const player = {
 const playerImg = new Image();
 playerImg.src = 'Kasaneandando.png';// Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
+console.log("Tentando carregar andar:", playerImg.src);
 
 const jumpImg = new Image();
 jumpImg.src = './assets/Kasane.png';  // Baixe/renomeie uma pose pulando
