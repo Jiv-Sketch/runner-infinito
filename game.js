@@ -8,7 +8,7 @@ const player = {
 };
 
 const playerImg = new Image();
-playerImg.src = 'Kasaneandando.png';// Sem / inicial pro local
+playerImg.src = 'assets/Kasane1.png';// Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
 console.log("Tentando carregar andar:", playerImg.src);
 
