@@ -19,6 +19,27 @@ function createObstacle() {
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+function handleInput() {
+  const gps = navigator.getGamepads();
+  for (let gp of gps) {
+    if (gp && gp.connected) {
+      gamepads[0] = gp;  // Primeiro gamepad
+      
+      // Pulo: Botão A/X (0 ou 1) ou direc up (12)
+      if ((gp.buttons[0].pressed || gp.buttons[1].pressed || gp.buttons[12].pressed) 
+          && !player.isJumping && gameRunning) {
+        player.velocityY = -15;
+        player.isJumping = true;
+      }
+      
+      // Reset: Start (9)
+      if (gp.buttons[9].pressed && !gameRunning) {
+        resetGame();
+      }
+    }
+  }
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' && !player.isJumping && gameRunning) {
     player.velocityY = -15;
