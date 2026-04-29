@@ -8,12 +8,16 @@ const player = {
 };
 
 const playerImg = new Image();
-playerImg.src = 'https://Jiv-Sketch.github.io/repo/assets/Kasaneandando.png';  // Sem / inicial pro local
+playerImg.src = 'assets/Kasaneandando.png';  // Sem / inicial pro local
 playerImg.onload = () => console.log('Kasane carregada!');  // Debug
 
 const jumpImg = new Image();
-jumpImg.src = './assets/Kasane.png';  // Baixe/renomeie uma pose pulando
+jumpImg.src = 'assets/Kasane.png';  // Baixe/renomeie uma pose pulando
 jumpImg.onload = () => console.log('Jump carregada!');
+
+const dashImg = new Image();
+dashImg.src = 'assets/KasaneDash.png';  // Baixe/renomeie uma pose dashing
+dashImg.onload = () => console.log('Dash carregada!');
 
 const obstacles = [];
 let score = 0;
@@ -204,19 +208,20 @@ if (obstacles.length < MAX_OBSTACLES) {
   ctx.fillRect((score * 0.5) % 100 - 100, 370, 100, 30);
   ctx.fillRect((score * 0.5) % 100, 370, 100, 30);
 
-  //ctx.fillStyle = player.color;
-  //ctx.fillRect(player.x, player.y, player.width, player.height);
-
-  // Imagem por cima SE carregou
-  //if (playerImg.complete && playerImg.naturalHeight > 0) {
-  //ctx.drawImage(playerImg, player.x, player.y, 80, player.height);
-//}
-  // Fallback quadrado
+// Fallback quadrado
 ctx.fillStyle = player.color;
 //ctx.fillRect(player.x, player.y, player.width, player.height);
 
-// Escolhe imagem por estado
-let currentImg = player.isJumping ? jumpImg : playerImg;
+// Prioridade: dash > jump > idle
+let currentImg;
+if (player.isdashing) {
+  currentImg = dashImg;
+} else if (player.isJumping) {
+  currentImg = jumpImg;
+} else {
+  currentImg = playerImg;
+}
+
 if (currentImg.complete && currentImg.naturalHeight > 0) {
   ctx.drawImage(currentImg, player.x, player.y, player.width, player.height);
 }
