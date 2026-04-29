@@ -2,9 +2,18 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 const player = {
-  x: 50, y: 30, width: 40, height: 50, color: '#FF4500',
-  velocityY: 0, isJumping: false
+  x: 50, y: 300, width: 40, height: 50, color: '#FF4500',  // ← y:300!
+  velocityY: 0, isJumping: false,
+  isdashing: false  // Adicione pra dash funcionar
 };
+
+const playerImg = new Image();
+playerImg.src = 'Kasaneandando.png';  // Sem / inicial pro local
+playerImg.onload = () => console.log('Kasane carregada!');  // Debug
+
+const jumpImg = new Image();
+jumpImg.src = 'Kasane.png';  // Baixe/renomeie uma pose pulando
+jumpImg.onload = () => console.log('Jump carregada!');
 
 const obstacles = [];
 let score = 0;
@@ -18,27 +27,6 @@ function createObstacle() {
 }
 
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-function handleInput() {
-  const gps = navigator.getGamepads();
-  for (let gp of gps) {
-    if (gp && gp.connected) {
-      gamepads[0] = gp;  // Primeiro gamepad
-      
-      // Pulo: Botão A/X (0 ou 1) ou direc up (12)
-      if ((gp.buttons[0].pressed || gp.buttons[1].pressed || gp.buttons[12].pressed) 
-          && !player.isJumping && gameRunning) {
-        player.velocityY = -15;
-        player.isJumping = true;
-      }
-      
-      // Reset: Start (9)
-      if (gp.buttons[9].pressed && !gameRunning) {
-        resetGame();
-      }
-    }
-  }
-}
 
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Space' && !player.isJumping && gameRunning) {
@@ -181,7 +169,7 @@ if (obstacles.length < MAX_OBSTACLES) {
 
 //      obstacles.push(
 //    {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b1313'},
-//    {x: canvas.width, y: 220, width: 30, height: 200, color: '#138b85'},
+//    {x: canvas.width, y: 220, width: 30, heightctx.drawImage(playerImg, player.x, player.y, player.width, player.height);: 200, color: '#138b85'},
 //    {x: canvas.width, y: 320, width: 30, height: 80, color: '#8b8913'},
 //    {x: canvas.width, y: 320, width: 30, height: 80, color: '#25138b'}
 //  );
@@ -216,9 +204,22 @@ if (obstacles.length < MAX_OBSTACLES) {
   ctx.fillRect((score * 0.5) % 100 - 100, 370, 100, 30);
   ctx.fillRect((score * 0.5) % 100, 370, 100, 30);
 
-  // Desenha jogador
-  ctx.fillStyle = player.color;
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  //ctx.fillStyle = player.color;
+  //ctx.fillRect(player.x, player.y, player.width, player.height);
+
+  // Imagem por cima SE carregou
+  //if (playerImg.complete && playerImg.naturalHeight > 0) {
+  //ctx.drawImage(playerImg, player.x, player.y, 80, player.height);
+//}
+  // Fallback quadrado
+ctx.fillStyle = player.color;
+//ctx.fillRect(player.x, player.y, player.width, player.height);
+
+// Escolhe imagem por estado
+let currentImg = player.isJumping ? jumpImg : playerImg;
+if (currentImg.complete && currentImg.naturalHeight > 0) {
+  ctx.drawImage(currentImg, player.x, player.y, player.width, player.height);
+}
 
   // Desenha obstáculos
   obstacles.forEach(obs => {
